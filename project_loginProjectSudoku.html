@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <link rel="stylesheet" href="Styles/SudokuPlayer.css">
+    
+</head>
+<body>
+  <h1 class="title">Sudoku Game</h1>
+  <label for="difficulty">Select Difficulty:</label>
+  <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+      <option value="super-hard">Super Hard</option>
+  </select>
+  <table id="sudoku-board">
+      <!-- Sudoku grid will be generated dynamically here -->
+  </table>
+  <button onclick="solveSudoku()">Solve</button>
+  <button onclick="resetSudoku()">Reset</button>
+
+    <script src="Scripts/SudokuPlayer.js">
+    </script>
+</body>
+</html>
