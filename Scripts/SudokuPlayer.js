@@ -1,31 +1,31 @@
-// Function to check if the number can be placed at the given position
-function isValid(board, row, col, num) {
-  // Check if the number is already present in the row
+// Function to check if a number is valid to be placed in a specific cell
+function isValidMove(board, row, col, num) {
+  // Check if the number is already present in the same row
   for (let i = 0; i < 9; i++) {
-      if (board[row][i] === num && i !== col) {
+      if (i !== col && board[row][i] === num) {
           return false;
       }
   }
 
-  // Check if the number is already present in the column
+  // Check if the number is already present in the same column
   for (let i = 0; i < 9; i++) {
-      if (board[i][col] === num && i !== row) {
+      if (i !== row && board[i][col] === num) {
           return false;
       }
   }
 
-  // Check if the number is already present in the 3x3 grid
+  // Check if the number is already present in the same 3x3 block
   const startRow = Math.floor(row / 3) * 3;
   const startCol = Math.floor(col / 3) * 3;
   for (let i = startRow; i < startRow + 3; i++) {
       for (let j = startCol; j < startCol + 3; j++) {
-          if (board[i][j] === num && i !== row && j !== col) {
+          if ((i !== row || j !== col) && board[i][j] === num) {
               return false;
           }
       }
   }
 
-  return true;
+  return true; // Number is valid
 }
 
 // Function to solve Sudoku puzzle using backtracking
@@ -38,7 +38,7 @@ function solveSudoku(board) {
   const [row, col] = emptyCell;
 
   for (let num = 1; num <= 9; num++) {
-      if (isValid(board, row, col, num)) {
+      if (isValidMove(board, row, col, num)) {
           board[row][col] = num;
 
           if (solveSudoku(board)) {
@@ -63,7 +63,6 @@ function findEmptyCell(board) {
   }
   return null; // No empty cell found
 }
-
 
 // Function to generate a Sudoku puzzle based on difficulty level
 function generateSudoku(difficulty) {
@@ -110,17 +109,16 @@ function generateSudoku(difficulty) {
   return board;
 }
 
-
 // Function to reset the Sudoku board
 function resetSudoku() {
   const sudokuBoard = document.getElementById("sudoku-board");
   sudokuBoard.innerHTML = ""; // Clear the board
-  initializeSudokuGrid();
+  initializeSudokuGrid(); // No difficulty parameter needed here
 }
 
 // Function to initialize the Sudoku grid
-function initializeSudokuGrid() {
-  const board = generateSudoku();
+function initializeSudokuGrid(difficulty = "easy") { // Set default difficulty to "easy"
+  const board = generateSudoku(difficulty); // Pass difficulty to generateSudoku
   const sudokuBoard = document.getElementById("sudoku-board");
 
   for (let i = 0; i < 9; i++) {
@@ -154,5 +152,5 @@ function initializeSudokuGrid() {
   }
 }
 
-// Call the initializeSudokuGrid function to start the game
-initializeSudokuGrid();
+// Call the initializeSudokuGrid function to start the game with a specified difficulty
+initializeSudokuGrid(); // Default difficulty is "easy"
